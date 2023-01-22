@@ -1,0 +1,90 @@
+name: moscow-time-app
+version: 0.1.0.0
+author: "Abuzyar Tazetdinov"
+maintainer: "tazetdinov9925@gmail.com"
+
+extra-source-files:
+  - README.md
+
+description: Simple web application which shows current time in Moscow.
+
+custom-setup:
+  dependencies:
+    - base
+    - Cabal
+    - cabal-doctest >=1.0.2 && <1.1
+
+default-extensions:
+  - OverloadedStrings
+
+ghc-options:
+  - -Wall
+  - -fno-warn-type-defaults
+  - -fwrite-ide-info
+  - -hiedir=.hie
+
+dependencies:
+  - base >= 4.7 && < 5
+  - mtl
+  - servant
+  - servant-server
+  - servant-lucid
+  - lucid
+  - warp
+  - unliftio
+  - time
+  - servant-prometheus
+  - prometheus-client
+  - co-log
+  - text
+  - bytestring
+  - aeson
+  - directory
+
+library:
+  source-dirs: src
+
+executables:
+  moscow-time-app-exe:
+    main: Main.hs
+    source-dirs: app
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+      - -Werror
+    dependencies:
+      - moscow-time-app
+
+tests:
+  spec:
+    main: Spec.hs
+    source-dirs:
+      - src
+      - test
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+    dependencies:
+      - moscow-time-app
+      - hspec
+      - hspec-wai
+      - HUnit
+      - QuickCheck
+      - servant-client
+      - wreq
+      - microlens
+      - http-client
+      - bytestring
+
+  doctests:
+    source-dirs: test
+    main: doctests.hs
+    other-modules: []
+    dependencies:
+      - base
+      - doctest
+      - Glob
+      - QuickCheck
+      - template-haskell
